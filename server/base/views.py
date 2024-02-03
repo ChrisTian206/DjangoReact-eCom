@@ -27,3 +27,14 @@ def getRoutes(request):
 @api_view(['GET'])
 def getProducts(request):
     return Response(products)
+
+#pk is the primary key of the product, which was included in the api url
+# path('procuct/<str:pk>', ...),
+@api_view(['GET'])
+def getProduct(request, pk):
+    target = None
+    for product in products:
+        if product['_id'] == pk:
+            target = product
+            break
+    return Response(target)
