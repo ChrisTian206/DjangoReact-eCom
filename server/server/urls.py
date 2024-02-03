@@ -20,5 +20,5 @@ from base import urls as baseUrls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(baseUrls)),
+    path('api/', include(baseUrls)),
 ]
