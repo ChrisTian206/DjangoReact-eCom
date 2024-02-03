@@ -5,9 +5,9 @@
 
 # Libraries Used
 
-* React-Bootstrap
-* React-router-dom
-* Bootswatch
+* React-Bootstrap: Container, Row, Col, LinkContainer, Nav, Navbar
+* React-router-dom: Link, BrowerRouter, Route, Routes
+* Bootswatch theme
 
 # Database 
 
