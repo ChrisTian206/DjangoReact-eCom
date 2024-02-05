@@ -14,6 +14,7 @@ function HomePage() {
         }
         fetchProducts();
     }, [])
+
     return (
         <div>
             <h1>New Products</h1>
