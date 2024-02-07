@@ -51,10 +51,26 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    Order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=2,null=True, blank=True)
     #image =
     _id =  models.AutoField(primary_key=True, editable=False)
 
+    def __str__(self):
+        return str(self.name)
+
+class ShippingAddress(models.Model):
+    #One order can only be linked to one shipping address
+    #that's why we use OneToOneField() with CASCADE(彼去此空)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length = 50, null=True, blank=True)
+    postal = models.CharField(max_length = 10, null=True, blank=True)
+    country = models.CharField(max_length = 200, null=True, blank=True)
+    shippingPrice = models.DecimalField(max_digits=7, decimal_places=2,null=True, blank=True)
+    _id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self):
+        return str(self.address)
