@@ -49,5 +49,12 @@ class Order(models.Model):
     def __str__(self):
         return str(self.createdOn)
 
-
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    Order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2,null=True, blank=True)
+    #image =
+    _id =  models.AutoField(primary_key=True, editable=False)
 
