@@ -10,7 +10,7 @@ function HomePage() {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         const fetchProducts = async () => {
-            setProducts((await axios.get('api/products')).data);
+            setProducts((await axios.get('api/products/')).data);
         }
         fetchProducts();
     }, [])
