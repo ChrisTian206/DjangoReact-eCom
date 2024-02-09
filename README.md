@@ -7,6 +7,7 @@
 
 * React-Bootstrap: Container, Row, Col, LinkContainer, Nav, Navbar
 * React-router-dom: Link, BrowerRouter, Route, Routes
+* Redux: state control
 * Bootswatch theme
 
 # Database 
