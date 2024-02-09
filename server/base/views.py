@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .products import products
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 # Create your views here.
 
+from .models import Product
+from .products import products
+from .serializers import ProductSerializer
 
 # This is the format of using django rest framework
 # the curly a bracket is used to define the type of request, it could be GET/PUT/POST/DELETE/.. , also called decorators
@@ -26,7 +28,11 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getProducts(request):
-    return Response(products)
+    products = Product.objects.all()
+    #many=True means there are multiple items in {product}
+    #using a serializer, we can then return a JSON object
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
 
 #pk is the primary key of the product, which was included in the api url
 # path('procuct/<str:pk>', ...),
