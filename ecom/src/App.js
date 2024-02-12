@@ -13,7 +13,7 @@ function App() {
         <Container>
           <Routes>
             <Route path='/' Component={HomePage} exact />
-            <Route path='/product/:id' Component={ProductPage} />
+            <Route path='/products/:id' Component={ProductPage} />
           </Routes>
         </Container>
       </main>

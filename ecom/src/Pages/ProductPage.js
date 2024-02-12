@@ -4,7 +4,6 @@ import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import Rating from '../Components/Rating'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import products from '../products'
 import axios from 'axios'
 
 function ProductPage({ }) {
@@ -13,7 +12,7 @@ function ProductPage({ }) {
     const [product, setProduct] = useState([]);
     useEffect(() => {
         const fetchProduct = async () => {
-            setProduct((await axios.get(`api/product/${id}`)).data);
+            setProduct((await axios.get(`api/products/${id}`)).data);
         }
         fetchProduct();
     }, [])
