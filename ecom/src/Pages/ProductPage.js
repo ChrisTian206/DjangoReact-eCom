@@ -13,7 +13,7 @@ function ProductPage({ }) {
     const [product, setProduct] = useState([]);
     useEffect(() => {
         const fetchProduct = async () => {
-            setProduct((await axios.get(`api/products/${id}`)).data);
+            setProduct((await axios.get(`api/product/${id}`)).data);
         }
         fetchProduct();
     }, [])
@@ -24,7 +24,7 @@ function ProductPage({ }) {
             <Row>
                 <Col md={6}>
 
-                    <Image src={product.image} alt={product.name} fluid />
+                    <Image src={`/images/${product.image}`} alt={product.name} fluid />
                 </Col>
 
                 <Col md={3}>
