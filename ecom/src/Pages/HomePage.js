@@ -6,12 +6,14 @@ import { useState, useEffect } from 'react'
 //useSelector used for selecting specific part of state from redux
 import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../actions/productActions'
+//
+import Loader from '../Components/Loader'
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/'
 
 function HomePage() {
     //using Redux action, dont need local state anymore 
-    //const [products, setProducts] = useState([]);
+    //const [products, setProducts] =  useState([]);
 
     const dispatch = useDispatch()
 
@@ -32,7 +34,7 @@ function HomePage() {
     return (
         <div>
             <h1>New Products</h1>
-            {loading ? <h2>Loading...</h2>
+            {loading ? <Loader />
                 : error ? <h3>{error}</h3>
                     : <Row>
                         {products.map(product => (
