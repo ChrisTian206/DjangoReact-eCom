@@ -17,6 +17,8 @@ function HomePage() {
 
     //reference store.js for what's in the state
     const productList = useSelector(state => state.productList)
+
+    const { error, products, loading } = productList
     useEffect(() => {
         //data fetching now handled in Action
         // const fetchProducts = async () => {
@@ -25,20 +27,21 @@ function HomePage() {
         // fetchProducts();
 
         dispatch(listProducts())
-    }, [])
-
-    const products = [];
+    }, [dispatch])
 
     return (
         <div>
             <h1>New Products</h1>
-            <Row>
-                {products.map(product => (
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        <Product product={product} />
-                    </Col>
-                ))}
-            </Row>
+            {loading ? <h2>Loading...</h2>
+                : error ? <h3>{error}</h3>
+                    : <Row>
+                        {products.map(product => (
+                            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                                <Product product={product} />
+                            </Col>
+                        ))}
+                    </Row>}
+
         </div>
     )
 }
