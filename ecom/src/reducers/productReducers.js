@@ -4,12 +4,12 @@ import {
     PRODUCT_LIST_SUCCESS
 } from '../constants/productConstants'
 
-export const productListReducers = (state = { product: [] }, action) => {
+export const productListReducers = (state = { products: [] }, action) => {
     switch (action.type) {
         case PRODUCT_LIST_REQUESTED:
-            return { loading: true, product: [] }
+            return { loading: true, products: [] }
         case PRODUCT_LIST_SUCCESS:
-            return { loading: false, product: action.payload }
+            return { loading: false, products: action.payload }
         case PRODUCT_LIST_FAILED:
             return { loading: false, error: action.payload }
 
