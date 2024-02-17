@@ -10,13 +10,16 @@ function Header() {
         <header>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    {/* Using LinkContainer reactifies link instead of refresh into home page */}
+                    {/* Using LinkContainer reactifies link instead of refresh into home page when using <a> tag*/}
                     <LinkContainer to='/'>
                         <Navbar.Brand className='col-3'>My Shop</Navbar.Brand>
                     </LinkContainer>
 
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+                    {/* This div is used for spacing the brand and the rest */}
                     <div className='col-6'></div>
+
                     <Navbar.Collapse id="basic-navbar-nav" className='col-3'>
                         <Nav className="mr-auto">
                             <LinkContainer to='/'>

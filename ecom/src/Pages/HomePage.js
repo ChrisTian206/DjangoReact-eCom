@@ -1,15 +1,12 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../Components/Product'
-import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 //useSelector used for selecting specific part of state from redux
 import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../actions/productActions'
-//
 import Loader from '../Components/Loader'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/'
 
 function HomePage() {
     //using Redux action, dont need local state anymore 
