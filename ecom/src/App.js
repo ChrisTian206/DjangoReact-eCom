@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap'
 import HomePage from './Pages/HomePage';
 import ProductPage from './Pages/ProductPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-
+import axios from 'axios';
 function App() {
 
   //for dev only, CORS already setup in Django
