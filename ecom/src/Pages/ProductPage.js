@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../Components/Rating'
 import Loader from '../Components/Loader'
 import Messager from '../Components/Messager'
 import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails } from '../actions/productActions'
 
 function ProductPage({ }) {
+    const [quantity, setQuantity] = useState(1)
     const match = useParams();
 
     const dispatch = useDispatch()
@@ -75,6 +75,36 @@ function ProductPage({ }) {
                                             </Row>
                                         </ListGroup.Item>
 
+                                        {product.countInStock > 0 && (
+                                            <ListGroup.Item>
+                                                <Row>
+                                                    <Col>Quantity</Col>
+                                                    <Col xs='auto' className='my-1'>
+                                                        <Form.Select
+                                                            aria-label='Default select example'
+                                                            as='select'
+                                                            value={quantity}
+                                                            onChange={(e) => setQuantity(e.target.value)}>
+                                                            <option>Select Quantity</option>
+                                                            {/* <option value={1}>1</option>
+                                                            <option value={2}>2</option>
+                                                            <option value={3}>3</option> */}
+
+                                                            {/* mistake: I used {} at the arrow function. Nothing is returned
+                                                            this way. I was why I'm not seeing the dropdown. Change it to () */}
+                                                            {
+                                                                [...Array(product.countInStock)].map((x, index) => (
+                                                                    <option key={index + 1} value={index + 1}>
+                                                                        {index + 1}
+                                                                    </option>
+                                                                ))
+                                                            }
+
+                                                        </Form.Select>
+                                                    </Col>
+                                                </Row>
+                                            </ListGroup.Item>
+                                        )}
                                         <ListGroup.Item>
                                             {product.countInStock > 0 ? (
                                                 <Button className='btn-block' type='button' disabled={product.countInStock === 0}>Add to Cart</Button>
