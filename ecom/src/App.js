@@ -3,6 +3,7 @@ import Footer from './Components/Footer'
 import { Container } from 'react-bootstrap'
 import HomePage from './Pages/HomePage';
 import ProductPage from './Pages/ProductPage';
+import CartPage from './Pages/CartPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 function App() {
@@ -22,7 +23,9 @@ function App() {
           <Routes>
             {/* exact -> url link gotta be exactly as '/' */}
             <Route path='/' Component={HomePage} exact />
+            <Route path='/cart/:id?' Component={CartPage} exact />
             <Route path='/products/:id' Component={ProductPage} />
+
           </Routes>
         </Container>
       </main>

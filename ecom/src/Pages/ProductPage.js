@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../Components/Rating'
 import Loader from '../Components/Loader'
@@ -11,7 +11,8 @@ import { listProductDetails } from '../actions/productActions'
 
 function ProductPage({ }) {
     const [quantity, setQuantity] = useState(1)
-    const match = useParams();
+    const match = useParams()
+    const history = useNavigate()
 
     const dispatch = useDispatch()
     const productDetails = useSelector(state => state.productDetails)
@@ -19,6 +20,10 @@ function ProductPage({ }) {
     useEffect(() => {
         dispatch(listProductDetails(match.id))
     }, [dispatch, match])
+
+    const addToCartHandler = () => {
+        history(`/cart/${match.id}/?quantity=${quantity}`)
+    }
 
     return (
         <div>
@@ -107,7 +112,12 @@ function ProductPage({ }) {
                                         )}
                                         <ListGroup.Item>
                                             {product.countInStock > 0 ? (
-                                                <Button className='btn-block' type='button' disabled={product.countInStock === 0}>Add to Cart</Button>
+                                                <Button
+                                                    onClick={addToCartHandler}
+                                                    className='btn-block'
+                                                    type='button'
+                                                    disabled={product.countInStock === 0}>
+                                                    Add to Cart</Button>
                                             ) : (
                                                 <Button className='btn-block' type='button' disabled>Out of Stock</Button>
                                             )}
