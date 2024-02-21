@@ -10,7 +10,14 @@ const reducer = combineReducers({
     cart: cartReducer
 })
 
-const initialState = {}
+//Bc cartItem stored in localStorage is JSON stringified, we gotta cover it back to JSON
+//get and check if exist. If yes, parse it; if not, set empty
+const cartItemFromLocalStorage = localStorage.getItem('cartItem') ?
+    JSON.parse(localStorage.getItem('cartItem')) : []
+
+const initialState = {
+    cart: cartItemFromLocalStorage
+}
 
 const middleware = [thunk]
 
