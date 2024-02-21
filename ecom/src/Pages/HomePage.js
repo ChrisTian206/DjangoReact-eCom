@@ -18,6 +18,7 @@ function HomePage() {
     const productList = useSelector(state => state.productList)
 
     const { error, products, loading } = productList
+
     useEffect(() => {
         //data fetching now handled in Action
         // const fetchProducts = async () => {
