@@ -18,7 +18,15 @@ function CartPage() {
     //the 10 is the parseInt means quantity is a 10-based integer
     const quantity = qty ? parseInt(qty, 10) : 1
 
-    console.log(quantity)
+    // console.log(quantity)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (productId) {
+            dispatch(addToCart(productId, quantity))
+        }
+    }, [dispatch, productId, quantity])
     return (
         <div>CartPage</div>
     )
