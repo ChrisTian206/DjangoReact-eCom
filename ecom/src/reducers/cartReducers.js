@@ -3,12 +3,16 @@ import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 export const cartReducer = (state = { cartItems: [] }, action) => {
     switch (action.type) {
         case CART_ADD_ITEM:
-            console.log('Current state:', state.cartItems);
+            //initiating cartItems as empty array in the parameter
+            //doesn't seem to work well.
+            if (!state.cartItems) state.cartItems = [];
+
+            console.log('Current state:', state);
             console.log('Action:', action);
             console.log(Array.isArray(state.cartItems))
 
             const item = action.payload
-            const existItem = state.cartItems.findIndex(x => x.product === item.product)
+            const existItem = state.cartItems.find(x => x.product === item.product)
 
 
             if (existItem) {
