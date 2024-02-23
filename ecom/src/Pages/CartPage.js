@@ -27,8 +27,22 @@ function CartPage() {
             dispatch(addToCart(productId, quantity))
         }
     }, [dispatch, productId, quantity])
+
+    const products = useSelector(state => state.cart)
+    const { cartItems } = products
+    console.log('cartItems', cartItems)
     return (
-        <div>CartPage</div>
+        <>
+            <div>In Your Cart: </div>
+            <ul>
+                {
+                    cartItems.map(product => (
+                        <li>{product.name} x{product.qty} ${product.price * product.qty} </li>
+                    ))
+                }
+            </ul>
+        </>
+
     )
 }
 
