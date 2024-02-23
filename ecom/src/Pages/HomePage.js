@@ -31,7 +31,6 @@ function HomePage() {
 
     return (
         <div>
-            <h1>New Products</h1>
             {loading ? <Loader />
                 : error ? <h3>{error}</h3>
                     : <Row>
@@ -41,7 +40,6 @@ function HomePage() {
                             </Col>
                         ))}
                     </Row>}
-
         </div>
     )
 }
