@@ -31,6 +31,10 @@ function CartPage() {
     const products = useSelector(state => state.cart)
     const { cartItems } = products
 
+    const removeItemHandler = (id) => {
+        console.log('removed: ', id)
+    }
+
     //console.log('cartItems: ', cartItems)
 
     return (
@@ -55,10 +59,10 @@ function CartPage() {
 
                                     <Col md={3}>
                                         <Form.Select
-                                            aria-label='Default select example'
+                                            aria-label='Select qty'
                                             as='select'
                                             value={product.quantity}
-                                            onChange={(e) => dispatch(addToCart(product.product, e.target.value))}>
+                                            onChange={(e) => dispatch(addToCart(product.product, Number(e.target.value)))}>
                                             <option>{product.qty}</option>
                                             {
                                                 [...Array(product.countInStock)].map((x, index) => (
@@ -70,6 +74,15 @@ function CartPage() {
                                                 ))
                                             }
                                         </Form.Select>
+                                    </Col>
+
+                                    <Col md={1}>
+                                        <Button
+                                            type='button'
+                                            variant='light'
+                                            onClick={() => removeItemHandler(product.product)}>
+                                            <i className='fas fa-trash'></i>
+                                        </Button>
                                     </Col>
                                 </Row>
                             </ListGroupItem>
@@ -83,7 +96,15 @@ function CartPage() {
 
             </Col>
 
-            <Col md={8}>
+            <Col md={4}>
+                <Card>
+                    <ListGroup variant='flush'>
+                        <ListGroupItem>
+                            <h2>Subtotal ({cartItems.reduce((acc, product) => acc + product.qty, 0)}) items </h2>
+                            ${cartItems.reduce((acc, product) => acc + product.qty * product.price, 0).toFixed(2)}
+                        </ListGroupItem>
+                    </ListGroup>
+                </Card>
             </Col>
         </Row>
     )
