@@ -35,6 +35,9 @@ function CartPage() {
         console.log('removed: ', id)
     }
 
+    const checkoutHandler = () => {
+        history.push('/login?redirect=shipping')
+    }
     //console.log('cartItems: ', cartItems)
 
     return (
@@ -97,14 +100,28 @@ function CartPage() {
             </Col>
 
             <Col md={4}>
-                <Card>
-                    <ListGroup variant='flush'>
-                        <ListGroupItem>
-                            <h2>Subtotal ({cartItems.reduce((acc, product) => acc + product.qty, 0)}) items </h2>
-                            ${cartItems.reduce((acc, product) => acc + product.qty * product.price, 0).toFixed(2)}
-                        </ListGroupItem>
-                    </ListGroup>
-                </Card>
+                {
+                    cartItems ? <Card>
+                        <ListGroup variant='flush'>
+                            <ListGroupItem>
+                                <h2>Subtotal ({cartItems.reduce((acc, product) => acc + product.qty, 0)}) items </h2>
+                                ${cartItems.reduce((acc, product) => acc + product.qty * product.price, 0).toFixed(2)}
+                            </ListGroupItem>
+
+                            <ListGroupItem>
+                                <Button
+                                    type='button'
+                                    className='btn-block'
+                                    disabled={cartItems.length === 0}
+                                    onClick={checkoutHandler}
+                                >
+
+                                    Proceed To Checkout
+                                </Button>
+                            </ListGroupItem>
+                        </ListGroup>
+                    </Card> : null
+                }
             </Col>
         </Row>
     )
