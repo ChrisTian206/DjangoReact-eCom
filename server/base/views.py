@@ -8,6 +8,9 @@ from .models import Product
 from .products import products
 from .serializers import ProductSerializer
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 # This is the format of using django rest framework
 # the curly a bracket is used to define the type of request, it could be GET/PUT/POST/DELETE/.. , also called decorators
 # when accessing the api, it provides a nice-looking interface, instead of the default django interface
@@ -41,3 +44,19 @@ def getProduct(request, pk):
     target = Product.objects.get(_id=pk)
     serializer = ProductSerializer(target, many = False)
     return Response(serializer.data)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        token['message'] = 'tests for returning token.message'
+        # ...
+
+        return token
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
