@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -47,16 +48,26 @@ def getProduct(request, pk):
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+    def validate(self, attrs):
+        #calls parent class's validate() with user input, attrs 
+        data = super().validate(attrs)
+        
+        # attrs contains what is entered from the user, similar to req.body/req.params/...
+        # Input are stored in a ordered dictionary. 
+        #print(attrs) -> OrderedDict([('username', 'chris'), ('password', 'chris')])
 
-        # Add custom claims
-        token['username'] = user.username
-        token['message'] = 'tests for returning token.message'
-        # ...
+        #Also, refresh and access token are automatically included. So we dont need to
+        # write anything about it.
 
-        return token
+        # oringinally: 
+        # data["refresh"] = str(refresh)
+        # data["access"] = str(refresh.access_token)
+
+        #self.user is part of the Serializer class from the package
+        data['username'] = self.user.username
+        data['email'] = self.user.email
+
+        return data
     
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
