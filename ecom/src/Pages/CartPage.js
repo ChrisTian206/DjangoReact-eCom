@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card, ListGroupItem } from 'react-bootstrap'
 import Messager from '../Components/Messager'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
 function CartPage() {
     const match = useParams()
@@ -32,7 +32,7 @@ function CartPage() {
     const { cartItems } = products
 
     const removeItemHandler = (id) => {
-        console.log('removed: ', id)
+        dispatch(removeFromCart(id))
     }
 
     const checkoutHandler = () => {
@@ -44,7 +44,7 @@ function CartPage() {
         <Row>
             <Col md={8}>
                 <h1>Shopping Cart</h1>
-                {cartItems ? (
+                {cartItems.length !== 0 ? (
                     // variant 'flush' removes the rounded edge and outer border
                     <ListGroup variant='flush'>
                         {cartItems.map(product => (
