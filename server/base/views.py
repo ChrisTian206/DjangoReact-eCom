@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .models import Product
 from .products import products
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, UserSerializer
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -29,6 +29,19 @@ def getRoutes(request):
         '/api/products/update/<id>/',
     ]
     return Response(routes)
+
+@api_view(['GET'])
+def getUserProfile(request):
+
+    #This would be normally how to get authenticated user using the default Django way
+    #But since we are using Django-restframework and JWT Token way(in settings.py we set 
+    #the default auth method to JWT Auth), we need to include the token in the headers
+    #of our GET request as: {KEY: Authorization, Value:"Bearer ${access token}"}
+
+    user = request.user
+    
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getProducts(request):
