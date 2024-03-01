@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .models import Product
 from .products import products
-from .serializers import ProductSerializer, UserSerializer
+from .serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -77,9 +77,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # data["access"] = str(refresh.access_token)
 
         #self.user is part of the Serializer class from the package
-        data['username'] = self.user.username
-        data['email'] = self.user.email
+        # data['username'] = self.user.username
+        # data['email'] = self.user.email 
 
+        serializer = UserSerializerWithToken(self.user).data
+        for key,value in serializer.items():
+            data[key]=value
+            
         return data
     
 class MyTokenObtainPairView(TokenObtainPairView):
