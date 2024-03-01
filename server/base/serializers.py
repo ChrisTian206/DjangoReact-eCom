@@ -10,10 +10,18 @@ class UserSerializer(serializers.ModelSerializer):
     #so, if there's another variale called Gabagoo = serializers.SerializerMethodField(),
     #It will look for get_Gabagoo() to get its value.
     name = serializers.SerializerMethodField(read_only=True)
+    _id = serializers.SerializerMethodField(read_only=True)
+    isAdmin = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id','username','email','name']
+        fields = ['id','_id','username','email','name','isAdmin']
+
+    def get_isAdmin(self, obj):
+        return obj.is_staff
+
+    def get__id(self,obj):
+        return obj.id
 
     
     #Python indentation is important. 
