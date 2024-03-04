@@ -1,10 +1,11 @@
 from typing import Any, Dict
 from django.shortcuts import render
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 # Create your views here.
-
+from django.contrib.auth.models import User
 from .models import Product
 from .products import products
 from .serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
@@ -31,6 +32,7 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated]) #no varified token, no views
 def getUserProfile(request):
 
     #This would be normally how to get authenticated user using the default Django way
@@ -44,12 +46,22 @@ def getUserProfile(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getUsers(request):
+    users = User.objects.all()
+    #many=True means there are multiple items in {product}
+    #using a serializer, we can then return a JSON object
+    serializer = UserSerializer(products, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def getProducts(request):
     products = Product.objects.all()
     #many=True means there are multiple items in {product}
     #using a serializer, we can then return a JSON object
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
+
 
 #pk is the primary key of the product, which was included in the api url
 # path('procuct/<str:pk>', ...),
