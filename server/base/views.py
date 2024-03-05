@@ -13,6 +13,8 @@ from .serializers import ProductSerializer, UserSerializer, UserSerializerWithTo
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from django.contrib.auth.hashers import make_password
+
 # This is the format of using django rest framework
 # the curly a bracket is used to define the type of request, it could be GET/PUT/POST/DELETE/.. , also called decorators
 # when accessing the api, it provides a nice-looking interface, instead of the default django interface
@@ -30,6 +32,22 @@ def getRoutes(request):
         '/api/products/update/<id>/',
     ]
     return Response(routes)
+
+@api_view(['POST'])
+def registerUser(request):
+    #data is a dict type
+    data = request.data
+    user = User.objects.create(
+        first_name = data['name'],
+        username = data['email'],
+        email = data['email'],
+        password = make_password(data['password']), #the beauty of battery-included framework :)
+    )
+
+    #we wanna give this user a token as soon as they register
+    serializer = UserSerializerWithToken(user, many=False)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated]) #no varified token, no views
