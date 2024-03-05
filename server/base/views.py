@@ -51,7 +51,7 @@ def getUsers(request):
     users = User.objects.all()
     #many=True means there are multiple items in {product}
     #using a serializer, we can then return a JSON object
-    serializer = UserSerializer(products, many=True)
+    serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
