@@ -14,6 +14,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.contrib.auth.hashers import make_password
+from rest_framework import status
 
 # This is the format of using django rest framework
 # the curly a bracket is used to define the type of request, it could be GET/PUT/POST/DELETE/.. , also called decorators
@@ -36,17 +37,21 @@ def getRoutes(request):
 @api_view(['POST'])
 def registerUser(request):
     #data is a dict type
-    data = request.data
-    user = User.objects.create(
-        first_name = data['name'],
-        username = data['email'],
-        email = data['email'],
-        password = make_password(data['password']), #the beauty of battery-included framework :)
-    )
+    try:
+        data = request.data
+        user = User.objects.create(
+            first_name = data['name'],
+            username = data['email'],
+            email = data['email'],
+            password = make_password(data['password']), #the beauty of battery-included framework :)
+        )
 
-    #we wanna give this user a token as soon as they register
-    serializer = UserSerializerWithToken(user, many=False)
-    return Response(serializer.data)
+        #we wanna give this user a token as soon as they register
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+    except:
+        msg = {'email is already is use'}
+        return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
