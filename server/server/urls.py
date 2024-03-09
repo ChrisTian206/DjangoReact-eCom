@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from base import urls as baseUrls
+#from base import urls as baseUrls
 
 
 #those two are from the myenv where django source code is included
@@ -32,4 +32,5 @@ urlpatterns = [
     path('api/orders/',include('base.urls.orders_urls')),
 ]
 
+#This helps handling images uploads
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
