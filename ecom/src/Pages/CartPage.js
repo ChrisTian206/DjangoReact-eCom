@@ -29,6 +29,10 @@ function CartPage() {
     }, [dispatch, productId, quantity])
 
     const products = useSelector(state => state.cart)
+
+    //products is actually just an array containing each cart item
+    //So it wont be neccessary to extract them out as 'const {cartItems}=products'
+    console.log(products)
     const { cartItems } = products
 
     const removeItemHandler = (id) => {
@@ -47,8 +51,8 @@ function CartPage() {
                 {cartItems.length !== 0 ? (
                     // variant 'flush' removes the rounded edge and outer border
                     <ListGroup variant='flush'>
-                        {cartItems.map(product => (
-                            <ListGroupItem>
+                        {cartItems.map((product) => (
+                            <ListGroupItem key={product.id}>
                                 <Row>
                                     <Col md={2}>
                                         <Image src={`/images/${product.image}`} fluid rounded />
