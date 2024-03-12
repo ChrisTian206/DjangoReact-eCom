@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap'
 import HomePage from './Pages/HomePage';
 import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
+import LoginPage from './Pages/LoginPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 function App() {
@@ -24,6 +25,7 @@ function App() {
             {/* exact -> url link gotta be exactly as '/' */}
             <Route path='/' Component={HomePage} exact />
             <Route path='/cart/:id?' Component={CartPage} exact />
+            <Route path='/login' Component={LoginPage} />
             <Route path='/products/:id' Component={ProductPage} />
 
           </Routes>

@@ -1,14 +1,60 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Button, Form } from 'react-bootstrap'
 import loader from '../Components/Loader'
 import Messager from '../Components/Messager'
+import FormContainer from '../Components/FormContainer'
+import { loginAction } from '../actions/userActions'
 
 function LoginPage() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const location = useLocation()
+    const history = useNavigate()
+    const dispatch = useDispatch()
+    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const userLogin = useSelector(state => state.userLogin)
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        console.log('submit')
+    }
+
     return (
-        <div>LoginPage</div>
+        <FormContainer>
+            <h1>Log In</h1>
+            <Form onSubmit={submitHandler}>
+                <Form.Group controlId='email' className='mb-3'>
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                        type='email'
+                        placeholder='enter your email'
+                        value={email}
+                        onChange={(e) => { setEmail(e.target.value) }}>
+                    </Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='password'>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type='password'
+                        placeholder='enter your password'
+                        value={password}
+                        onChange={(e) => { setPassword(e.target.value) }}>
+                    </Form.Control>
+                </Form.Group>
+
+                <Row className='py-2'>
+                    <Col>
+                        <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}> New User?</Link>
+                    </Col>
+                </Row>
+                <Button type='submit' variant='primary' className='mt-3'>Sign In</Button>
+            </Form>
+        </FormContainer>
     )
 }
 
