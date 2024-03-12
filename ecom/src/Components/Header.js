@@ -15,13 +15,13 @@ function Header() {
                         <Navbar.Brand className='col-3'>My Shop</Navbar.Brand>
                     </LinkContainer>
 
+                    {/* This div is used for spacing the brand and the rest */}
+                    <div lg={6} md={3}> </div>
+
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-                    {/* This div is used for spacing the brand and the rest */}
-                    <div className='col-6'></div>
-
                     <Navbar.Collapse id="basic-navbar-nav" className='col-3'>
-                        <Nav className="mr-auto">
+                        <Nav className="ms-auto">
                             <LinkContainer to='/'>
                                 <Nav.Link ><i className='fa-solid fa-house-chimney'></i>Home</Nav.Link>
                             </LinkContainer>
@@ -34,14 +34,14 @@ function Header() {
                                 <Nav.Link ><i class="fa-regular fa-user"></i>Login</Nav.Link>
                             </LinkContainer>
 
-                            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            </NavDropdown>
+                            </NavDropdown> */}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-        </header>
+        </header >
     )
 }
 
