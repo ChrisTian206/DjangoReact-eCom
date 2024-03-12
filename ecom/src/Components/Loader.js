@@ -1,7 +1,7 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
 
-function loader() {
+function Loader() {
     return (
         <div style={{
             position: 'fixed',
@@ -9,7 +9,8 @@ function loader() {
             left: '50%',
             transform: 'translate(-50%, -50%)'
         }}>
-            <Spinner animation='border' role='status' style={{ height: '100px', width: '100px' }}>
+            <Spinner
+                animation='border' role='status' style={{ height: '100px', width: '100px' }}>
 
                 {/* sr-only means screen reader only, you won't see it on screen thou */}
                 <span className='sr-only'>Loading...</span>
@@ -18,4 +19,4 @@ function loader() {
     );
 }
 
-export default loader
+export default Loader
