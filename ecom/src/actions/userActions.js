@@ -7,9 +7,7 @@ export const login = (email, password) => async (dispatch) => {
             type: USER_LOGIN_REQUEST
         })
 
-
-
-        const { data } = axios.post(
+        const { data } = await axios.post(
             '/api/users/login/',
             { 'username': email, 'password': password }, //username -> email, ikr, it's how I setup in Django
             {
@@ -17,6 +15,8 @@ export const login = (email, password) => async (dispatch) => {
                     'content-type': 'application/json'
                 }
             })
+
+        //console.log('log in data: ', data)
 
         dispatch({
             type: USER_LOGIN_SUCCESS,

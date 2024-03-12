@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Button, Form } from 'react-bootstrap'
-import loader from '../Components/Loader'
+import Loader from '../Components/Loader'
 import Messager from '../Components/Messager'
 import FormContainer from '../Components/FormContainer'
-import { loginAction } from '../actions/userActions'
+import { login } from '../actions/userActions'
 
 function LoginPage() {
     const [email, setEmail] = useState('')
@@ -18,15 +18,27 @@ function LoginPage() {
     const redirect = location.search ? location.search.split('=')[1] : '/'
     const userLogin = useSelector(state => state.userLogin)
 
+    const { loading, error, userInfo } = userLogin
+
+    //Once user is logged in, redirect them; they shouldn't see the log in page again
+    useEffect(() => {
+        if (userInfo) {
+            // history.push(redirect)
+            history(redirect)
+        }
+    }, [userInfo, redirect, history])
+
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log('submit')
+        dispatch(login(email, password))
     }
 
     return (
         <FormContainer>
             <h1>Log In</h1>
-            <Form onSubmit={submitHandler}>
+            {error && <Messager variant={'danger'}>{error}</Messager>}
+            {loading && <Loader />}
+            <Form onSubmit={submitHandler} >
                 <Form.Group controlId='email' className='mb-3'>
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
