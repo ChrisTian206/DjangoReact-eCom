@@ -6,13 +6,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap'
 import { Link } from 'react-router-dom';
+import { logout } from '../actions/userActions';
 
 function Header() {
     const userState = useSelector(state => state.userLogin)
     const { userInfo } = userState
+    const dispatch = useDispatch()
 
     const logoutHandler = () => {
-        console.log('Log out now')
+        dispatch(logout())
     }
     return (
         <header>
