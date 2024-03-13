@@ -32,7 +32,7 @@ function CartPage() {
 
     //products is actually just an array containing each cart item
     //So it wont be neccessary to extract them out as 'const {cartItems}=products'
-    console.log(products)
+    //console.log(products)
     const { cartItems } = products
 
     const removeItemHandler = (id) => {

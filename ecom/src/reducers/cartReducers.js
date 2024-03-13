@@ -7,9 +7,9 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
             //doesn't seem to work well.
             if (!state.cartItems) state.cartItems = [];
 
-            console.log('Current state:', state);
-            console.log('Action:', action);
-            console.log(Array.isArray(state.cartItems))
+            // console.log('Current state:', state);
+            // console.log('Action:', action);
+            // console.log(Array.isArray(state.cartItems))
 
             //This payload is the actual product order:
             // payload: {
