@@ -35,6 +35,15 @@ def registerUser(request):
         return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated]) #no varified token, no views
+def updateUserProfile(request):
+
+    user = request.user
+    
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated]) #no varified token, no views
 def getUserProfile(request):
