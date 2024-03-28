@@ -17,8 +17,8 @@ from rest_framework import status
 
 @api_view(['POST'])
 def registerUser(request):
-    #data is a dict type
     try:
+        #data is a dict type
         data = request.data
         user = User.objects.create(
             first_name = data['name'],
@@ -40,8 +40,18 @@ def registerUser(request):
 def updateUserProfile(request):
 
     user = request.user
-    
     serializer = UserSerializer(user, many=False)
+
+    data = request.data
+    user.first_name = data['name']
+    user.username = data['name']
+    user.email = data['email']
+
+    if data['password'] != '':
+        user.password = make_password(data['password'])
+
+    user.save()
+
     return Response(serializer.data)
 
 @api_view(['GET'])
