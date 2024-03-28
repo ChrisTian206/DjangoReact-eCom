@@ -6,6 +6,7 @@ import ProductPage from './Pages/ProductPage';
 import CartPage from './Pages/CartPage';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
+import ProfilePage from './Pages/ProfilePage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path='/login' Component={LoginPage} />
             <Route path='/register' Component={RegisterPage} />
             <Route path='/products/:id' Component={ProductPage} />
+            <Route path='/profile' Component={ProfilePage} />
 
           </Routes>
         </Container>
