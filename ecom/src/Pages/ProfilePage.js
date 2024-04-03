@@ -6,7 +6,7 @@ import { Row, Col, Button, Form } from 'react-bootstrap'
 import Loader from '../Components/Loader'
 import Messager from '../Components/Messager'
 import FormContainer from '../Components/FormContainer'
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, updateProfile } from '../actions/userActions'
 
 function ProfilePage() {
     const [username, setUsername] = useState('')
@@ -46,6 +46,12 @@ function ProfilePage() {
             setMsg('Passwords do not match ')
         } else {
             console.log('updating profile for: ', user.username)
+            dispatch(updateProfile({
+                'user': user._id,
+                'username': username,
+                'email': email,
+                'password': password
+            }))
         }
     }
 
