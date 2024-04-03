@@ -9,14 +9,99 @@ import FormContainer from '../Components/FormContainer'
 import { getUserDetails } from '../actions/userActions'
 
 function ProfilePage() {
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [cmfPassword, setCmfPassword] = useState('')
+    const [msg, setMsg] = useState('')
+
     const location = useLocation()
     const history = useNavigate()
     const dispatch = useDispatch()
+
+    const userDetail = useSelector(state => state.userDetails)
+    const userLogin = useSelector(state => state.userLogin)
+
+    const { loading, error, user } = userDetail
+    const { userInfo } = userLogin
+
+    useEffect(() => {
+        if (!userInfo) {
+            history('/login')
+        } else {
+            //if we have a user loged in, but not yet load user's 
+            if (!user || !user.username) {
+                dispatch(getUserDetails('profile')) //then it will reach backend "/api/user/profile"
+            } else {
+                setUsername(user.username)
+                setEmail(user.email)
+            }
+        }
+    }, [dispatch, history, user, userInfo])
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+
+        if (password !== cmfPassword) {
+            setMsg('Passwords do not match ')
+        } else {
+            console.log('updating profile for: ', user.username)
+        }
+    }
 
     return (
         <Row>
             <Col md={3}>
                 <h2>user profile</h2>
+                {msg && <Messager variant={'danger'}>{msg}</Messager>}
+                {error && <Messager variant={'danger'}>{error}</Messager>}
+                {loading && <Loader />}
+                <Form onSubmit={submitHandler} >
+                    <Form.Group controlId='username' className='mb-3'>
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+
+                            type='text'
+                            placeholder='enter your username'
+                            value={username}
+                            onChange={(e) => { setUsername(e.target.value) }}>
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId='email' className='mb-3'>
+                        <Form.Label>Email Address</Form.Label>
+                        <Form.Control
+
+                            type='email'
+                            placeholder='enter your email'
+                            value={email}
+                            onChange={(e) => { setEmail(e.target.value) }}>
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId='password'>
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+
+                            type='password'
+                            placeholder='enter your password'
+                            value={password}
+                            onChange={(e) => { setPassword(e.target.value) }}>
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId='password'>
+                        <Form.Label>Confirm Your Password</Form.Label>
+                        <Form.Control
+
+                            type='password'
+                            placeholder='confirm your password'
+                            value={cmfPassword}
+                            onChange={(e) => { setCmfPassword(e.target.value) }}>
+                        </Form.Control>
+                    </Form.Group>
+                    <Button type='submit' variant='primary' className='mt-3'>Update</Button>
+                </Form>
             </Col>
 
             <Col md={9}>

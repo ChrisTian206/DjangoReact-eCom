@@ -19,8 +19,8 @@ function RegisterPage() {
     const history = useNavigate()
     const dispatch = useDispatch()
     const redirect = location.search ? location.search.split('=')[1] : '/'
-    const userRegister = useSelector(state => state.userRegister)
 
+    const userRegister = useSelector(state => state.userRegister)
     const { loading, error, userInfo } = userRegister
 
     //Once user is registered, redirect them; they shouldn't see the log in page again
