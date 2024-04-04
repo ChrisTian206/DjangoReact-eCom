@@ -40,11 +40,11 @@ def registerUser(request):
 def updateUserProfile(request):
 
     user = request.user
-    serializer = UserSerializer(user, many=False)
+    serializer = UserSerializerWithToken(user, many=False)
 
     data = request.data
-    user.first_name = data['name']
-    user.username = data['name']
+    #user.first_name = data['username']
+    user.username = data['username']
     user.email = data['email']
 
     if data['password'] != '':
