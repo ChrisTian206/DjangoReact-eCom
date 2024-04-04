@@ -19,11 +19,13 @@ function ProfilePage() {
     const history = useNavigate()
     const dispatch = useDispatch()
 
-    const userDetail = useSelector(state => state.userDetails)
+    const userDetails = useSelector(state => state.userDetails)
     const userLogin = useSelector(state => state.userLogin)
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
 
-    const { loading, error, user } = userDetail
+    const { loading, error, user } = userDetails
     const { userInfo } = userLogin
+    const { success } = userUpdateProfile
 
     useEffect(() => {
         if (!userInfo) {
@@ -37,7 +39,7 @@ function ProfilePage() {
                 setEmail(user.email)
             }
         }
-    }, [dispatch, history, user, userInfo])
+    }, [dispatch, history, user, userInfo, success])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -52,6 +54,7 @@ function ProfilePage() {
                 'email': email,
                 'password': password
             }))
+            setMsg('')
         }
     }
 
@@ -66,7 +69,6 @@ function ProfilePage() {
                     <Form.Group controlId='username' className='mb-3'>
                         <Form.Label>Username</Form.Label>
                         <Form.Control
-
                             type='text'
                             placeholder='enter your username'
                             value={username}
