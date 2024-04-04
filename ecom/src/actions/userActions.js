@@ -103,6 +103,8 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
                 }
             })
 
+        console.log('userActions, the data from /api/user/id is: ', data)
+
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload: data
@@ -128,7 +130,7 @@ export const updateProfile = (user) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios.put(
-            `api/users/profile/update`,
+            `api/users/profile/update/`,
             user,
             {
                 headers: {
