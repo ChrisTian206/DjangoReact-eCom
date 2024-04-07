@@ -9,13 +9,19 @@ import { Link } from 'react-router-dom';
 import { logout } from '../actions/userActions';
 
 function Header() {
-    const userState = useSelector(state => state.userLogin)
-    const { userInfo } = userState
     const dispatch = useDispatch()
+
+    const userState = useSelector(state => state.userLogin)
+    //userInfo exist in userState only if LOGIN_SUCCESS is dispatched, which means 
+    //only if user is logged in, there will exist a userInfo
+    const { userInfo } = userState
 
     const logoutHandler = () => {
         dispatch(logout())
     }
+
+    console.log("Header: I have userInfo here as: ", userInfo)
+
     return (
         <header>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -42,7 +48,7 @@ function Header() {
 
                             {
                                 userInfo ?
-                                    <NavDropdown title={`${userInfo.username}`}>
+                                    <NavDropdown title={`${userInfo.name}`}>
                                         <LinkContainer to={'/profile'}>
                                             <Nav.Link><i class="fa-solid fa-user"></i>Profile</Nav.Link>
                                         </LinkContainer>
