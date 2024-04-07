@@ -43,15 +43,17 @@ def updateUserProfile(request):
     serializer = UserSerializerWithToken(user, many=False)
 
     data = request.data
-    #user.first_name = data['username']
-    user.username = data['username']
+
+    user.first_name = data['name']
     user.email = data['email']
+    #print(data['greet'])
 
     if data['password'] != '':
         user.password = make_password(data['password'])
 
     user.save()
 
+    #print('The seriliazer.data is: ', serializer.data)
     return Response(serializer.data)
 
 @api_view(['GET'])
