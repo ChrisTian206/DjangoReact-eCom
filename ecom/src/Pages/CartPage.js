@@ -40,7 +40,7 @@ function CartPage() {
     }
 
     const checkoutHandler = () => {
-        history.push('/login?redirect=shipping')
+        history('/login?redirect=/shipping')
     }
     //console.log('cartItems: ', cartItems)
 
