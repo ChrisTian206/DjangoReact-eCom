@@ -1,15 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Button, Form } from 'react-bootstrap'
 import Loader from '../Components/Loader'
 import Messager from '../Components/Messager'
-import FormContainer from '../Components/FormContainer'
 import { getUserDetails, updateProfile } from '../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 function ProfilePage() {
-    const [username, setUsername] = useState('')
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [cmfPassword, setCmfPassword] = useState('')
@@ -23,8 +23,9 @@ function ProfilePage() {
     const userLogin = useSelector(state => state.userLogin)
     const userUpdateProfile = useSelector(state => state.userUpdateProfile)
 
-    const { loading, error, user } = userDetails
     const { userInfo } = userLogin
+    const { loading, error, user } = userDetails
+
     const { success } = userUpdateProfile
 
     useEffect(() => {
@@ -32,10 +33,12 @@ function ProfilePage() {
             history('/login')
         } else {
             //if we have a user loged in, but not yet load user's 
-            if (!user || !user.username) {
+            if (!user || !user.name || success) {
+                console.log('profilePage, in if(!user||!user.username) says: ', 'I ran!')
+                dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile')) //then it will reach backend "/api/user/profile"
             } else {
-                setUsername(user.username)
+                setName(user.name)
                 setEmail(user.email)
             }
         }
@@ -47,12 +50,13 @@ function ProfilePage() {
         if (password !== cmfPassword) {
             setMsg('Passwords do not match ')
         } else {
-            console.log('updating profile for: ', user.username)
+            console.log('updating profile for: ', user.name)
             dispatch(updateProfile({
                 'user': user._id,
-                'username': username,
+                'name': name,
                 'email': email,
-                'password': password
+                'password': password,
+                'greet': 'hiii from front end'
             }))
             setMsg('')
         }
@@ -67,12 +71,12 @@ function ProfilePage() {
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler} >
                     <Form.Group controlId='username' className='mb-3'>
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label>Name</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='enter your username'
-                            value={username}
-                            onChange={(e) => { setUsername(e.target.value) }}>
+                            value={name}
+                            onChange={(e) => { setName(e.target.value) }}>
                         </Form.Control>
                     </Form.Group>
 
