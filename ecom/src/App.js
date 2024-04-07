@@ -7,6 +7,7 @@ import CartPage from './Pages/CartPage';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
 import ProfilePage from './Pages/ProfilePage';
+import ShippingPage from './Pages/ShippingPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 function App() {
@@ -31,7 +32,7 @@ function App() {
             <Route path='/register' Component={RegisterPage} />
             <Route path='/products/:id' Component={ProductPage} />
             <Route path='/profile' Component={ProfilePage} />
-
+            <Route path='/shipping' Component={ShippingPage} />
           </Routes>
         </Container>
       </main>
