@@ -15,15 +15,17 @@ function LoginPage() {
     const location = useLocation()
     const history = useNavigate()
     const dispatch = useDispatch()
-    const redirect = location.search ? location.search.split('=')[1] : '/'
-    const userLogin = useSelector(state => state.userLogin)
 
+    const redirect = location.search ? location.search.split('=')[1] : '/'
+
+    const userLogin = useSelector(state => state.userLogin)
+    //userInfo is empty before log in
     const { loading, error, userInfo } = userLogin
 
     //Once user is logged in, redirect them; they shouldn't see the log in page again
     useEffect(() => {
         if (userInfo) {
-            // history.push(redirect)
+            // history.push(redirect) *This is a old way of doing redirect, it will error if do it now
             history(redirect)
         }
     }, [userInfo, redirect, history])
